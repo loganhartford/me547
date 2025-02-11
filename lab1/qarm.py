@@ -16,6 +16,8 @@ p_Q_D = np.array([0, 0, -4.3])
 # Transformation Matrices
 T_S_C = homogeneous_transform(np.eye(3), p_S_C)
 
+print("T_S_C\n", T_S_C)
+
 R_C_A = np.array([
     [0,  1,  0],
     [1,  0,  0],
@@ -23,7 +25,11 @@ R_C_A = np.array([
 ])
 T_C_A = homogeneous_transform(R_C_A, p_C_A)
 
+print("T_C_A\n", T_C_A)
+
 T_Q_D = homogeneous_transform(np.eye(3), p_Q_D)
+
+print("T_Q_D\n", T_Q_D)
 
 R_D_B = np.array([
     [ 0, -1,  0],
@@ -31,6 +37,8 @@ R_D_B = np.array([
     [ 0,  0, -1]
 ])
 T_D_B = homogeneous_transform(R_D_B, p_D_B)
+
+print("T_D_B\n", T_D_B)
 
 def transform_point(T, p):
     p_hom = np.append(p, 1)
@@ -48,7 +56,7 @@ p_O_D = transform_point(T_Q_D, p_O_Q)
 p_O_B = transform_point(T_D_B, p_O_D)
 
 
-print("Robot A")
+print("\nRobot A")
 print("Object position in Sensor frame (S):", p_O_S)
 print("Object position in Camera frame (C):", p_O_C)
 print("Object position in Robot A frame (A):", p_O_A)

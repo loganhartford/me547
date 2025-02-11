@@ -1,0 +1,41 @@
+Module VBModule
+    
+    Sub Main()
+        ' Define test joint angles (in degrees)
+        Dim pi As Double
+        pi = 3.14159265359
+        
+        Dim th1 As Double = 0
+        Dim th2 As Double = -90
+        Dim th3 As Double = -Math.Atan(29/2)*180/pi
+        Dim th4 As Double = Math.Atan(29/2)*180/pi
+        Dim th5 As Double = 0
+
+        ' Call the forwKin function and store the result
+        
+        Dim result() As Double = forwKin(th1,th2,th3,th4,th5)
+        ' Display the results
+        Console.WriteLine("This should be approximately : (368,0,280)")
+        Console.WriteLine("Forward Kinematics Result:")
+        Console.WriteLine("x: " & result(1))
+        Console.WriteLine("y: " & result(2))
+        Console.WriteLine("z: " & result(3))
+    End Sub
+    
+    Public Function forwKin(ByVal th1 As Double, ByVal th2 As Double, ByVal th3 As Double, ByVal th4 As Double, ByVal th5 As Double) As Double()
+        ' Define pi:
+        Dim pi As Double = 3.14159265359
+        Dim p(3) As Double 
+        
+        '' You may use: Math.Sin, Math.Cos, Math.Sqrt
+        
+        '''''''''''''''''''''''''''Modify here'''''''''''''''''''''''''''''''''
+        
+        p(1) = 78*(Math.Cos(th1)*Math.Cos(th2)*(Math.Cos(th3)*Math.Sin(th4)+Math.Sin(th3)*Math.Cos(th4))+Math.Cos(th1)*Math.Sin(th2) *( Math.Sin(th3)*Math.Sin(th4)-Math.Cos(th3)*Math.Cos(th4)))+290.688*Math.Cos(th1)*Math.Cos(th2)*Math.Cos(th3)+290.688*Math.Cos(th1) * Math.Sin(th2)*Math.Sin(th3)+260*Math.Cos(th1)*Math.Cos(th2)
+        p(2) = 78*(Math.Sin(th1)*Math.Cos(th2)*(Math.Cos(th3)*Math.Sin(th4)+Math.Sin(th3)*Math.Cos(th4))+Math.Sin(th1)*Math.Sin(th2) *( Math.Sin(th3)*Math.Sin(th4)-Math.Cos(th3)*Math.Cos(th4)))+290.688*Math.Sin(th1)*Math.Cos(th2)*Math.Cos(th3)+290.688*Math.Sin(th1) * Math.Sin(th2)*Math.Sin(th3)+260*Math.Sin(th1)*Math.Cos(th2)
+        p(3) = -78*(Math.Sin(th2)*(Math.Cos(th3)*Math.Sin(th4)+Math.Sin(th3)*Math.Cos(th4))+Math.Cos(th2)*( Math.Sin(th3)*Math.Sin(th4)-Math.Cos(th3)*Math.Cos(th4)))-290.688*Math.Sin(th2)*Math.Cos(th3)-290.688*Math.Cos(th2)*Math.Sin(th3)-260*Math.Sin(th2)
+        
+        ''''''''''''''''''''''''End Modification'''''''''''''''''''''''''''''''
+        Return p
+    End Function
+End Module
