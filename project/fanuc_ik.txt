@@ -1,0 +1,56 @@
+Module VBModule
+    Sub Main()
+        ' Define input values
+        Dim x As Double = 435
+        Dim y As Double = -105
+        Dim z As Double = -80
+        Dim alpha As Double = 45
+
+        ' Call the invKin function
+        Dim result() As Double = invKin(x, y, z, alpha)
+
+        ' Display results
+        Console.WriteLine("Inverse Kinematics Result:")
+        Console.WriteLine("theta_1: " & result(0))
+        Console.WriteLine("theta_2: " & result(1))
+        Console.WriteLine("theta_3: " & result(2))
+        Console.WriteLine("theta_4: " & result(3))
+        Console.WriteLine("theta_5: " & result(4))
+    End Sub
+
+    Public Function invKin(ByVal xe As Double, ByVal ye As Double, ByVal ze As Double, ByVal a As Double) As Double()
+        ' Define link lengths
+        Dim l1 As Double = 260
+        Dim l2 As Double = Math.Sqrt(290 ^ 2 + 20 ^ 2)
+        Dim l3 As Double = 78
+
+        ' Convert angle to radians
+        Dim aRad As Double = a * Math.PI / 180.0
+
+        ' Compute theta1
+        Dim theta1 As Double = Math.Atan2(ye, xe)
+
+        ' Compute intermediate values
+        Dim z As Double = ze + l3
+        Dim c As Double = Math.Sqrt(xe ^ 2 + ye ^ 2 + z ^ 2)
+        Dim alpha As Double = Math.Acos((l1 ^ 2 + l2 ^ 2 - c ^ 2) / (2 * l1 * l2))
+        Dim beta As Double = Math.Acos((l1 ^ 2 + c ^ 2 - l2 ^ 2) / (2 * l1 * c))
+        Dim gamma As Double = Math.Asin(z / c)
+
+        ' Compute joint angles
+        Dim theta2 As Double = -(beta + gamma)
+        Dim theta3 As Double = alpha - Math.PI
+        Dim theta4 As Double = Math.PI / 2 - (alpha - (Math.PI / 2 - (beta + gamma)))
+        Dim theta5 As Double = Math.PI + theta1 - aRad
+
+        ' Convert results to degrees
+        Dim result(4) As Double
+        result(0) = theta1 * 180.0 / Math.PI
+        result(1) = theta2 * 180.0 / Math.PI
+        result(2) = theta3 * 180.0 / Math.PI
+        result(3) = theta4 * 180.0 / Math.PI
+        result(4) = theta5 * 180.0 / Math.PI
+
+        Return result
+    End Function
+End Module
